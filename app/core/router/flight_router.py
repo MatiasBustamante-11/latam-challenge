@@ -1,6 +1,7 @@
 from fastapi import APIRouter,Path, Query
 from app.core.enum.tipo_vuelo import TipoVuelo
 from app.core.enum.airlines import Airlines
+from app.core.service.flight_service import flight_service
 
 
 class FlightRouter:
@@ -12,7 +13,7 @@ class FlightRouter:
                        tipo_vuelo:TipoVuelo =Query(...,description="Tipo de vuelo, I =Internacional, N =Nacional"),
                          mes :int = Query(...,description="Número del mes de operacion del vuelo",ge=1,le=12)):
         
-        return opera
+        return flight_service.prediction_delay(opera,tipo_vuelo,mes)
     
 
 
