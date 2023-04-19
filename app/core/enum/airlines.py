@@ -8,7 +8,7 @@ class Airlines(Enum):
 
     AIR_FRANCE="Air France"
 
-    AERO_MEXICO = "Aeromexico"
+    AERO_MEXICO ="Aeromexico"
 
     AEROLINEAS="Aerolineas Argentinas"
 

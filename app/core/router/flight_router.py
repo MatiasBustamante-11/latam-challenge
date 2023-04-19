@@ -15,6 +15,4 @@ class FlightRouter:
         
         return flight_service.prediction_delay(opera,tipo_vuelo,mes)
     
-
-
 flight_router:object = FlightRouter()

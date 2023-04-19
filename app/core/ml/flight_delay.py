@@ -8,7 +8,7 @@ __version__ = "0.1.0"
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 
 with open(f"{BASE_DIR}/finalized_model_logreg-{__version__}.pkl", "rb") as f:
-    model_multi = pickle.load(f)
+    delay_pred_model = pickle.load(f)
 
 c_list = [0] * 37
 c_list =[c_list]
@@ -53,19 +53,17 @@ df = pd.DataFrame(c_list,columns=["OPERA_Aerolineas Argentinas",
 
 class MlFlightDelay:
     def predict_pipeline_delay(self,opera,tipo_vuelo,mes):
-        print(opera)
-        opera="OPERA_"+str(opera)
+        opera="OPERA_"+str(opera.value)
         mes="MES_"+str(mes)
-        tipo_vuelo="TIPOVUELO_"+str(tipo_vuelo)
+        tipo_vuelo="TIPOVUELO_"+str(tipo_vuelo.value)
 
         df[opera] = df[opera].replace([0], 1)
         df[mes] = df[mes].replace([0], 1)
         df[tipo_vuelo] = df[tipo_vuelo].replace([0], 1)
 
-        print("El resultado es:", model_multi.predict(df))
-        print("El resultado es:", model_multi.predict_proba(df))
+        predicted_value,predicted_prob_no_delay,predicted_prob_delay=delay_pred_model.predict(df)[0],delay_pred_model.predict_proba(df)[0][0],delay_pred_model.predict_proba(df)[0][1]
 
-        return
+        return float(predicted_value),float(predicted_prob_no_delay),float(predicted_prob_delay)
 
 ml_flight_delay:object= MlFlightDelay()
 
