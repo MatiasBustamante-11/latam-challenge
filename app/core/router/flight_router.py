@@ -2,12 +2,15 @@ from fastapi import APIRouter,Path, Query
 from app.core.enum.tipo_vuelo import TipoVuelo
 from app.core.enum.airlines import Airlines
 from app.core.service.flight_service import flight_service
+from app.core.swagger.ml_response_codes import ml_response_codes
+from app.core.swagger.ml_swagger_output import MlSwaggerOutput
 
 
 class FlightRouter:
     def __init__(self):
         self.router = APIRouter()
-        self.router.add_api_route("/flight-prediction",self.make_prediction_router,methods=["GET"])
+
+        self.router.add_api_route("/flight-prediction",self.make_prediction_router,methods=["GET"],response_model=MlSwaggerOutput,responses={**ml_response_codes})
 
     async def make_prediction_router(self,opera: Airlines=Query(...,description="Nombre de aerolínea que opera"),
                        tipo_vuelo:TipoVuelo =Query(...,description="Tipo de vuelo, I =Internacional, N =Nacional"),
