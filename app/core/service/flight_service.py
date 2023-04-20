@@ -9,4 +9,3 @@ class FlightService:
         return predicted_values.__dict__
  
 flight_service:object = FlightService()
- 
